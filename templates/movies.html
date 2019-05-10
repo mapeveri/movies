@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <a href="/" class="btn btn-sm btn-secondary">Unrated</a>
+    <a href="/rating" class="btn btn-sm btn-secondary">Rating</a>
+
+    <a href="/similar" class="btn btn-sm btn-secondary">Similar</a>
+
+    {% if filter_movies != "actors" %}
+    <a href="/actors" id="actors-button" class="btn btn-sm btn-secondary">Actors</a>
+    {% endif %}
+
+    <select id="actors" {% if filter_movies != "actors" %}style="display: none"{% endif %}>
+        <option></option>
+        {% for actor in actors %}
+            <option value="{{ actor.slug }}">{{ actor.name }}</option>
+        {% endfor %}
+    </select>
+
+    <hr>
+
+    {% if filter_movies %}
+        {% include "carousel.html" %}
+    {% else %}
+        {% for movie in movies %}
+            {% set show_photo = True %}
+            {% include "movie.html" %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block script_js %}
+<script>
+    $(document).ready(function() {
+        $("#actors-button").click(function(ev) {
+            ev.preventDefault();
+
+            $("#actors-button").hide("slow");
+            $("#actors").show("slow");
+        });
+
+        $("#actors").change(function(ev) {
+            ev.preventDefault();
+            window.location = "/actors/" + this.value;
+        });
+    });
+</script>
+{% endblock %}

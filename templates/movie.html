@@ -1,0 +1,26 @@
+<div class="media white">
+    {% if show_photo %}
+    <img src="{{ movie.posterurl }}" class="mr-3" alt="{{ movie.originalTitle }}" width="300" height="400">
+    {% endif %}
+    <div class="media-body">
+        <h5 class="mt-0">{{ movie.title }} ({{ movie.year }})</h5>
+        {{ movie.storyline }}
+        {% if filter_movies == "rating" %}
+            <br>
+            <strong>Average rating:</strong> {{ movie.averageRating }}
+        {% endif %}
+        <br>
+        <strong>Release:</strong> {{ movie.releaseDate }}
+        <br>
+        <strong>Duration: </strong>{{ movie.duration }}
+        <p><strong>Imdb Rating:</strong> {{ movie.imdbRating }}</p>
+        {% for actor in movie.actors %}
+            <span class="badge badge-primary">{{ actor }}</span>
+        {% endfor %}
+        <br>
+        {% for genres in movie.genres %}
+            <span class="badge badge-secondary">{{ genres }}</span>
+        {% endfor %}
+    </div>
+</div>
+<br>
